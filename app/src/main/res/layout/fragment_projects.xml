@@ -23,14 +23,14 @@
         android:layout_height="wrap_content"
         android:scrollbars="vertical" />
 
-    <android.support.v7.widget.CardView
+    <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
         android:id="@+id/loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:visibility="invisible"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="7dp">
+        app:corner_radius="8dp"
+        android:elevation="2dp">
 
         <com.cunoraz.gifview.library.GifView
             android:id="@+id/gif1"
@@ -40,7 +40,7 @@
             app:gif="@mipmap/giphy" />
 
 
-    </android.support.v7.widget.CardView>
+    </com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/network_lost"

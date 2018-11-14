@@ -9,14 +9,13 @@
 
 
 
-    <android.support.v7.widget.CardView
+    <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
         android:id="@+id/_card"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:cardElevation="6dp"
-        app:cardCornerRadius="5dp"
-        app:cardBackgroundColor="@color/cardview_light_background"
+        app:corner_radius="7dp"
+        android:elevation="2dp"
         >
 
         <TextView
@@ -24,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Project"
-            android:layout_gravity="center"
+            android:layout_centerInParent="true"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:elevation="6dp"
@@ -38,6 +37,6 @@
             android:contentDescription="@string/raspberry_pi_3"
             />
 
-    </android.support.v7.widget.CardView>
+    </com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
 
 </LinearLayout>
