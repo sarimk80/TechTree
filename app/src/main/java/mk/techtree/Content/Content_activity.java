@@ -55,7 +55,11 @@ public class Content_activity extends AppCompatActivity {
     @BindView(R.id.back)
     ImageView imageView;
 
-    String Description="The Description is here";
+    String Description;
+
+    String Code;
+
+    String Image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,17 +83,29 @@ public class Content_activity extends AppCompatActivity {
 
         String Title = getIntent().getStringExtra("Title");
 
+        Description = getIntent().getStringExtra("Description");
+
+        Code = getIntent().getStringExtra("Code");
+
+        Image=getIntent().getStringExtra("Image");
+
+
         textView.setText(Title);
 
 
     }
 
-    public String getDescription(){
+    public String getDescription() {
         return Description;
     }
 
+    public String Send_Code() {
+        return Code;
+    }
 
-
+    public String Send_Image(){
+        return Image;
+    }
 
 
     private void SetupViewPager(ViewPager viewPager) {
@@ -102,17 +118,6 @@ public class Content_activity extends AppCompatActivity {
 
 
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

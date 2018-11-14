@@ -54,7 +54,7 @@ public class OverView extends Fragment {
     public void rasp() {
         Intent intent = new Intent(getActivity(), Raspberrypi.class);
         startActivity(intent);
-        Bungee.slideUp(getActivity());
+
     }
 
 
@@ -62,7 +62,7 @@ public class OverView extends Fragment {
     public void kit() {
         Intent intent = new Intent(getActivity(), Kit.class);
         startActivity(intent);
-        Bungee.slideUp(getActivity());
+
     }
 
 }

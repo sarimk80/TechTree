@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.ImageView;
 
 
-
 public class Splash extends AppCompatActivity {
 
     @Override
@@ -17,22 +16,22 @@ public class Splash extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
 
-        Handler handler=new Handler();
+        Handler handler = new Handler();
 
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent=new Intent(Splash.this,MainActivity.class);
+                Intent intent = new Intent(Splash.this, MainActivity.class);
                 startActivity(intent);
             }
-        },2000);
+        }, 2000);
 
 
-        ImageView imageView=findViewById(R.id.centerImage);
+        ImageView imageView = findViewById(R.id.centerImage);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(Splash.this,MainActivity.class);
+                Intent intent = new Intent(Splash.this, MainActivity.class);
                 startActivity(intent);
             }
         });

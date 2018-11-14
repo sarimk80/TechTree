@@ -110,7 +110,7 @@ public class Raspberrypi extends AppCompatActivity {
     public void backClick() {
         Intent intent = new Intent(Raspberrypi.this, MainActivity.class);
         startActivity(intent);
-        Bungee.slideDown(Raspberrypi.this);
+
     }
 
     @OnClick(R.id.usb)
@@ -180,7 +180,7 @@ public class Raspberrypi extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Bungee.slideDown(Raspberrypi.this);
+
         super.onBackPressed();
     }
 }

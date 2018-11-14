@@ -33,6 +33,6 @@ public class Kit extends AppCompatActivity {
     public void backClick(){
         Intent intent=new Intent(Kit.this, MainActivity.class);
         startActivity(intent);
-        Bungee.slideDown(Kit.this);
+
     }
 }

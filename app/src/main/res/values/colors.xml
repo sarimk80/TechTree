@@ -9,4 +9,5 @@
     <color name="CardView">#FEFEFE</color>
     <color name="Ripple">#16455F</color>
     <color name="text">#212121</color>
+    <color name="paragraph_text">#424242</color>
 </resources>

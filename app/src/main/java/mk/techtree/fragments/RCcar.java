@@ -58,10 +58,31 @@ public class RCcar extends Fragment implements AdapterView.OnItemClickListener {
 
 
     ImageView discover;
-    ImageView arrow_up, arrow_down, arrow_left, arrow_right, imageView2;
 
+    @BindView(R.id.arrow_up)
+    ImageView arrow_up;
+
+    @BindView(R.id.arrow_down)
+    ImageView arrow_down;
+
+    @BindView(R.id.arrow_left)
+    ImageView arrow_left;
+
+    @BindView(R.id.arrow_right)
+    ImageView arrow_right;
+
+    @BindView(R.id.imageView2)
+    ImageView imageView2;
+
+
+    @BindView(R.id.loading)
     CardView loading;
+
+    @BindView(R.id.gif1)
     GifView cat;
+
+
+    @BindView(R.id.progress)
     LottieAnimationView lottieAnimationView;
 
     @BindView(R.id.textview)
@@ -208,16 +229,16 @@ public class RCcar extends Fragment implements AdapterView.OnItemClickListener {
 
         lvNewDevices = _view.findViewById(R.id.lvNewDevices);
 
-        ButterKnife.bind(this,_view);
+        ButterKnife.bind(this, _view);
 
-        arrow_up = _view.findViewById(R.id.arrow_up);
-        arrow_down = _view.findViewById(R.id.arrow_down);
-        arrow_right = _view.findViewById(R.id.arrow_right);
-        arrow_left = _view.findViewById(R.id.arrow_left);
-        imageView2 = _view.findViewById(R.id.imageView2);
-        loading = _view.findViewById(R.id.loading);
-        cat = _view.findViewById(R.id.gif1);
-        lottieAnimationView = _view.findViewById(R.id.progress);
+        //arrow_up = _view.findViewById(R.id.arrow_up);
+        //arrow_down = _view.findViewById(R.id.arrow_down);
+        //arrow_right = _view.findViewById(R.id.arrow_right);
+        //arrow_left = _view.findViewById(R.id.arrow_left);
+        //imageView2 = _view.findViewById(R.id.imageView2);
+        //loading = _view.findViewById(R.id.loading);
+        //cat = _view.findViewById(R.id.gif1);
+        //lottieAnimationView = _view.findViewById(R.id.progress);
 
 
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED);

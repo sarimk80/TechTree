@@ -52,6 +52,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
             public void onClick(View view) {
                 Intent intent=new Intent(view.getContext(), Content_activity.class);
                 intent.putExtra("Title",list_view_setters1.getName_project());
+                intent.putExtra("Description",list_view_setters1.getDescription());
+                intent.putExtra("Code",list_view_setters1.getCode());
+                intent.putExtra("Image",list_view_setters1.getImage());
                 view.getContext().startActivity(intent);
                 Bungee.slideUp(view.getContext());
             }

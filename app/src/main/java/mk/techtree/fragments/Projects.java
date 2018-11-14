@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -48,9 +49,16 @@ public class Projects extends Fragment {
     @BindView(R.id.textview)
     TextView textView;
 
+    @BindView(R.id.loading)
     CardView cardView;
 
+    @BindView(R.id.gif1)
     GifView gifView;
+
+    @BindView(R.id.network_lost)
+    LottieAnimationView lottieAnimationView;
+
+    RequestQueue requestQueue;
 
     String URL_Project = "https://script.googleusercontent.com/macros/echo?user_content_key=2rNaOG5UPvCFq_tzAgbqRyc6N9AKW18w4K340yf755hP-f1H1gz4sXD1qcR_E4leShK8mfgVEweyvQzTAHbVZ91u9hW3bgYcm5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnEvv0NuU4fnWMwos8OeCclCtOcjpagL8omPShBxVgozXBprjfYq2x5uqh-NrHuZ9ov3G9YKhFlrw&lib=MJ3U7ZcToRb8RwKP78SI0y7ZGgXJoIyjV";
 
@@ -68,8 +76,10 @@ public class Projects extends Fragment {
 
         recyclerView = view.findViewById(R.id.recycleView);
 
-        cardView = view.findViewById(R.id.loading);
-        gifView = view.findViewById(R.id.gif1);
+        //cardView = view.findViewById(R.id.loading);
+        //gifView = view.findViewById(R.id.gif1);
+
+        //lottieAnimationView=view.findViewById(R.id.network_lost);
 
         ButterKnife.bind(this, view);
 
@@ -83,6 +93,7 @@ public class Projects extends Fragment {
 
         cardView.setVisibility(View.VISIBLE);
         gifView.setVisibility(View.VISIBLE);
+        requestQueue = Volley.newRequestQueue(getContext());
 
         getData();
 
@@ -95,8 +106,6 @@ public class Projects extends Fragment {
     private void getData() {
 
 
-        final RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URL_Project, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -108,7 +117,10 @@ public class Projects extends Fragment {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         List_View_Setters _list_view_setters = new List_View_Setters(
 
-                                jsonObject.getString("name")
+                                jsonObject.getString("name"),
+                                jsonObject.getString("description"),
+                                jsonObject.getString("code"),
+                                jsonObject.getString("image")
 
                         );
                         list_view_setters.add(_list_view_setters);
@@ -131,6 +143,7 @@ public class Projects extends Fragment {
 
                 cardView.setVisibility(View.INVISIBLE);
                 gifView.setVisibility(View.INVISIBLE);
+                lottieAnimationView.setVisibility(View.VISIBLE);
                 Toast.makeText(getContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
 
 
@@ -140,6 +153,17 @@ public class Projects extends Fragment {
         requestQueue.add(jsonObjectRequest);
 
 
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        requestQueue.cancelAll(new RequestQueue.RequestFilter() {
+            @Override
+            public boolean apply(Request<?> request) {
+                return true;
+            }
+        });
     }
 
 }
