@@ -170,13 +170,11 @@
         </android.support.constraint.ConstraintLayout>
 
 
-        <android.support.v7.widget.CardView
+        <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
             android:layout_width="match_parent"
             android:layout_height="260dp"
             android:layout_margin="10dp"
-            app:cardBackgroundColor="@color/CardView"
-            app:cardCornerRadius="7dp"
-            app:cardElevation="5dp">
+            app:corner_radius="3dp">
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -221,7 +219,7 @@
             </ScrollView>
 
 
-        </android.support.v7.widget.CardView>
+        </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
 
     </LinearLayout>
 
