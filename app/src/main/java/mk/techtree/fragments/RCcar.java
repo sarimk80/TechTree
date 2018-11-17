@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.cunoraz.gifview.library.GifView;
@@ -520,9 +521,12 @@ public class RCcar extends Fragment implements AdapterView.OnItemClickListener {
         //NOTE: Requires API 17+? I think this is JellyBean
 
         //Log.d(TAG, "Trying to pair with " + deviceName);
+
         mBTDevices.get(i).createBond();
         //Log.d(TAG, "Creating Bond " + deviceName);
         mBTDevice = mBTDevices.get(i);
+
+
         //Log.d(TAG, "Paired With " + deviceName);
         mBluetoothConnection = new DeviceConnectionService(getActivity());
 

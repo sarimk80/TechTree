@@ -8,17 +8,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.TextView;
 
-import com.vstechlab.easyfonts.EasyFonts;
-
-import mk.techtree.Activities.Raspberrypi;
 import mk.techtree.fragments.OverView;
 import mk.techtree.fragments.Projects;
 import mk.techtree.fragments.RCcar;
 
 public class MainActivity extends AppCompatActivity {
 
+    BottomNavigationView navigation;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -26,20 +23,27 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
+            item.setChecked(true);
 
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    fragmentTransaction.replace(R.id.placeholder, new OverView()).commit();
+                    fragmentTransaction.replace(R.id.placeholder, new OverView());
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
 
                     return true;
                 case R.id.navigation_dashboard:
-                    fragmentTransaction.replace(R.id.placeholder, new Projects()).commit();
+                    fragmentTransaction.replace(R.id.placeholder, new Projects());
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
 
                     return true;
                 case R.id.navigation_notifications:
-                    fragmentTransaction.replace(R.id.placeholder, new RCcar()).commit();
+                    fragmentTransaction.replace(R.id.placeholder, new RCcar());
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
 
                     return true;
             }
@@ -56,19 +60,23 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
 
-        BottomNavigationView navigation = findViewById(R.id.navigation);
+        navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        fragmentTransaction.replace(R.id.placeholder, new OverView()).commit();
+        fragmentTransaction.replace(R.id.placeholder, new OverView());
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
 
 
     }
 
     @Override
     public void onBackPressed() {
-        Intent a = new Intent(Intent.ACTION_MAIN);
-        a.addCategory(Intent.CATEGORY_HOME);
-        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(a);
+        if(getFragmentManager().getBackStackEntryCount() > 0){
+            getFragmentManager().popBackStackImmediate();
+        }
+        else{
+            super.onBackPressed();
+        }
     }
 }

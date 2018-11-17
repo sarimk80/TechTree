@@ -1,9 +1,10 @@
 package mk.techtree.fragments;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +14,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import mk.techtree.Activities.Kit;
-import mk.techtree.Activities.Raspberrypi;
 import mk.techtree.R;
-import spencerstudios.com.bungeelib.Bungee;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -52,17 +50,27 @@ public class OverView extends Fragment {
 
     @OnClick(R.id.raspberry)
     public void rasp() {
-        Intent intent = new Intent(getActivity(), Raspberrypi.class);
-        startActivity(intent);
+        FragmentManager fragmentManager=getFragmentManager();
+        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.placeholder,new RaspberryPi());
+        fragmentTransaction.addToBackStack("null");
+        fragmentTransaction.commit();
 
     }
 
 
     @OnClick(R.id.kit)
     public void kit() {
-        Intent intent = new Intent(getActivity(), Kit.class);
-        startActivity(intent);
+        FragmentManager fragmentManager=getFragmentManager();
+        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.placeholder,new mk.techtree.fragments.Kit());
+        fragmentTransaction.addToBackStack("null");
+        fragmentTransaction.commit();
 
     }
+
+
+
+
 
 }

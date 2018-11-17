@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -214,9 +215,14 @@ public class DeviceConnectionService {
 //                ,"Please Wait...",true);
         //catLoadingView.show();
 
-
+    try {
         mConnectThread = new ConnectThread(device, uuid);
         mConnectThread.start();
+    }catch (Exception e){
+        e.printStackTrace();
+        Toast.makeText(mContext,"Bluetooth Device not in Range",Toast.LENGTH_LONG).show();
+    }
+
     }
 
     /**
