@@ -4,13 +4,14 @@ package mk.techtree.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.LayoutInflater;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +56,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
                 intent.putExtra("Description",list_view_setters1.getDescription());
                 intent.putExtra("Code",list_view_setters1.getCode());
                 intent.putExtra("Image",list_view_setters1.getImage());
+                intent.putExtra("Things",list_view_setters1.getThings());
+                intent.putExtra("Build",list_view_setters1.getBuild());
+                intent.putExtra("Functionality",list_view_setters1.getFuntionality());
+
                 view.getContext().startActivity(intent);
                 Bungee.slideUp(view.getContext());
             }
@@ -71,7 +76,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView projects;
-        CardView cardView;
+        RoundKornerRelativeLayout cardView;
 
         public MyViewHolder(View itemView) {
             super(itemView);

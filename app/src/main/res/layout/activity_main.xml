@@ -29,7 +29,6 @@
         app:itemIconTint="@drawable/colorlisternet"
         app:itemTextColor="@drawable/colorlisternet"
         app:menu="@menu/navigation"
-
         />
 
 

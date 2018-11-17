@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -18,14 +20,16 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
+        android:weightSum="2"
         >
 
     <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_margin="10dp"
+        android:layout_height="@dimen/_150sdp"
+        android:layout_margin="@dimen/_10sdp"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         app:corner_radius="8dp"
+        android:layout_weight="0.6"
 
         >
 
@@ -56,10 +60,11 @@
 
     <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_margin="10dp"
+        android:layout_height="@dimen/_150sdp"
+        android:layout_margin="@dimen/_10sdp"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         app:corner_radius="8dp"
+        android:layout_weight="0.6"
 
         >
 

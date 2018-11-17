@@ -1,24 +1,12 @@
 package mk.techtree.Content;
 
-import android.content.Intent;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,10 +14,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import mk.techtree.Activities.Raspberrypi;
-import mk.techtree.MainActivity;
 import mk.techtree.R;
-import spencerstudios.com.bungeelib.Bungee;
 
 public class Content_activity extends AppCompatActivity {
 
@@ -59,7 +44,7 @@ public class Content_activity extends AppCompatActivity {
 
     String Code;
 
-    String Image;
+    String Image, Build, Things, code_function;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +72,13 @@ public class Content_activity extends AppCompatActivity {
 
         Code = getIntent().getStringExtra("Code");
 
-        Image=getIntent().getStringExtra("Image");
+        Image = getIntent().getStringExtra("Image");
+
+        Build = getIntent().getStringExtra("Build");
+
+        Things = getIntent().getStringExtra("Things");
+
+        code_function = getIntent().getStringExtra("Functionality");
 
 
         textView.setText(Title);
@@ -103,8 +94,20 @@ public class Content_activity extends AppCompatActivity {
         return Code;
     }
 
-    public String Send_Image(){
+    public String Send_Image() {
         return Image;
+    }
+
+    public String Send_Build() {
+        return Build;
+    }
+
+    public String Send_Things() {
+        return Things;
+    }
+
+    public String Send_Code_Function() {
+        return code_function;
     }
 
 
@@ -117,6 +120,15 @@ public class Content_activity extends AppCompatActivity {
         viewPager.setAdapter(sectionPageAdapter);
 
 
+    }
+
+    @OnClick(R.id.back)
+    public void Back() {
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStackImmediate();
+        } else {
+            super.onBackPressed();
+        }
     }
 
 

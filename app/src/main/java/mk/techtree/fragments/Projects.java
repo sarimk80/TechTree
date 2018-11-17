@@ -3,7 +3,6 @@ package mk.techtree.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,6 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.cunoraz.gifview.library.GifView;
+import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,7 +50,7 @@ public class Projects extends Fragment {
     TextView textView;
 
     @BindView(R.id.loading)
-    CardView cardView;
+    RoundKornerRelativeLayout cardView;
 
     @BindView(R.id.gif1)
     GifView gifView;
@@ -120,7 +120,10 @@ public class Projects extends Fragment {
                                 jsonObject.getString("name"),
                                 jsonObject.getString("description"),
                                 jsonObject.getString("code"),
-                                jsonObject.getString("image")
+                                jsonObject.getString("image"),
+                                jsonObject.getString("things"),
+                                jsonObject.getString("build"),
+                                jsonObject.getString("funtionality")
 
                         );
                         list_view_setters.add(_list_view_setters);

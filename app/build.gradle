@@ -4,7 +4,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "mk.techtree"
-        minSdkVersion 17
+        minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -37,7 +37,7 @@ dependencies {
     implementation 'com.android.volley:volley:1.0.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation files('libs/YouTubeAndroidPlayerApi.jar')
-
+    implementation 'com.intuit.sdp:sdp-android:1.0.5'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     implementation 'com.jcminarro:RoundKornerLayouts:0.3.1'
     testImplementation 'junit:junit:4.12'
@@ -46,4 +46,3 @@ dependencies {
     implementation files('libs/YouTubeAndroidPlayerApi.jar')
 
 }
-

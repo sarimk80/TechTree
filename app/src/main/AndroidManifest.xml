@@ -21,8 +21,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".Activities.Raspberrypi" />
-        <activity android:name=".Activities.Kit" />
         <activity
             android:name=".Content.Content_activity"
             android:label="@string/title_activity_content_activity"
