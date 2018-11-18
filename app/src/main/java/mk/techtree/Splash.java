@@ -21,7 +21,7 @@ public class Splash extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(Splash.this, MainActivity.class);
+                Intent intent = new Intent(Splash.this, LoginActivity.class);
                 startActivity(intent);
             }
         }, 2000);
@@ -31,7 +31,7 @@ public class Splash extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Splash.this, MainActivity.class);
+                Intent intent = new Intent(Splash.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
