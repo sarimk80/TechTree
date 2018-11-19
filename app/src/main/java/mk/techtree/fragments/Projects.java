@@ -123,7 +123,8 @@ public class Projects extends Fragment {
                                 jsonObject.getString("image"),
                                 jsonObject.getString("things"),
                                 jsonObject.getString("build"),
-                                jsonObject.getString("funtionality")
+                                jsonObject.getString("funtionality"),
+                                jsonObject.getString("youtube")
 
                         );
                         list_view_setters.add(_list_view_setters);

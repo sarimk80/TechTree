@@ -59,9 +59,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
                 intent.putExtra("Things",list_view_setters1.getThings());
                 intent.putExtra("Build",list_view_setters1.getBuild());
                 intent.putExtra("Functionality",list_view_setters1.getFuntionality());
-
+                intent.putExtra("Youtube_id",list_view_setters1.getYoutube_id());
                 view.getContext().startActivity(intent);
-                Bungee.slideUp(view.getContext());
+
             }
         });
 

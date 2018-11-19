@@ -25,6 +25,7 @@ public class Youtube_fragment extends Fragment {
 
     private YouTubePlayer _youTubePlayer;
     String apiKey = "AIzaSyBhCQpmfjGFkAGFs3qjI6CGtIM71XBvagQ";
+    String youtube_id;
 
 
     public Youtube_fragment() {
@@ -37,6 +38,8 @@ public class Youtube_fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_youtube_fragment, container, false);
+        Content_activity content_activity = (Content_activity) getActivity();
+        youtube_id=content_activity.Send_youtube();
 
 
         YouTubePlayerSupportFragment youTubePlayerSupportFragment = YouTubePlayerSupportFragment.newInstance();
@@ -50,7 +53,7 @@ public class Youtube_fragment extends Fragment {
                 if (!b) {
                     _youTubePlayer=youTubePlayer;
                     _youTubePlayer.setFullscreen(false);
-                    _youTubePlayer.loadVideo("AHrCI9eSJGQ");
+                    _youTubePlayer.loadVideo(youtube_id);
                     _youTubePlayer.play();
                 }
             }
