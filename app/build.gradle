@@ -44,5 +44,10 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation files('libs/YouTubeAndroidPlayerApi.jar')
+    implementation 'com.jcminarro:RoundKornerLayouts:0.4.0'
+    compile 'com.facebook.android:facebook-android-sdk:4.38.1'
+    compile 'com.google.code.gson:gson:2.8.0'
+
+
 
 }

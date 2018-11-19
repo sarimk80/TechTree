@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">TechTree</string>
+    <string name="facebook_app_id">2219224178347038</string>
+    <string name="fb_login_protocol_scheme">fb2219224178347038</string>
     <string name="title_home">OverView</string>
     <string name="title_dashboard">Projects</string>
     <string name="title_notifications">SRC</string>
