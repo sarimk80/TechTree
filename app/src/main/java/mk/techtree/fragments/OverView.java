@@ -14,7 +14,11 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
+import mk.techtree.MainActivity;
 import mk.techtree.R;
+import mk.techtree.abstracts.BaseFragment;
+import mk.techtree.activities.BaseActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,12 +39,14 @@ public class OverView extends Fragment {
     @BindView(R.id.textview)
     TextView textView;
 
+    Unbinder unbind;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_over_view, container, false);
-        ButterKnife.bind(this, view);
+        unbind = ButterKnife.bind(this, view);
 
         textView.setText("OverView");
 
@@ -50,27 +56,49 @@ public class OverView extends Fragment {
 
     @OnClick(R.id.raspberry)
     public void rasp() {
-        FragmentManager fragmentManager=getFragmentManager();
-        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.placeholder,new RaspberryPi());
-        fragmentTransaction.addToBackStack("null");
-        fragmentTransaction.commit();
+
 
     }
 
 
     @OnClick(R.id.kit)
     public void kit() {
-        FragmentManager fragmentManager=getFragmentManager();
-        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.placeholder,new mk.techtree.fragments.Kit());
-        fragmentTransaction.addToBackStack("null");
-        fragmentTransaction.commit();
+
 
     }
 
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbind.unbind();
+    }
 
+    @OnClick({R.id.imgLogout, R.id.back, R.id.raspberry, R.id.kit})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.imgLogout:
+                BaseFragment.logoutClick(getContext(), getActivity());
+                break;
+            case R.id.back:
+                break;
+            case R.id.raspberry:
+                addDockableFragment(R.id.placeholder, new RaspberryPi());
+                break;
+            case R.id.kit:
+                addDockableFragment(R.id.placeholder, new Kit());
+                break;
+        }
+    }
+
+
+    public void addDockableFragment(int id, Fragment fragment) {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(id, fragment);
+        fragmentTransaction.addToBackStack(fragment.getClass().getSimpleName());
+        fragmentTransaction.commit();
+    }
 
 
 }

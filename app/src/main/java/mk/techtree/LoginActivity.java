@@ -24,6 +24,7 @@ import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,9 +48,15 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        printHashKey(getApplicationContext());
-
         callbackManager = CallbackManager.Factory.create();
+
+
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
+
+        if (isLoggedIn) {
+            disconnectSocialNetworks();
+        }
 
 
         btnFBLoginButton.setReadPermissions("email");
@@ -62,7 +69,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
 //                // App code
-
 
                 AccessToken accessToken = loginResult.getAccessToken();
                 fetchUserInfo(accessToken);
@@ -110,8 +116,8 @@ public class LoginActivity extends AppCompatActivity {
 
 //                    facebookProfile.picture = new String("https://graph.facebook.com/" + facebookProfile.fbID + "/picture?width=200&height=150");
 //                    Log.i("profile_pic", facebookProfile.picture + "");
-                    fbLogin(facebookProfile);
                     disconnectSocialNetworks();
+                    fbLogin(facebookProfile);
 
                 }
             });
@@ -151,26 +157,8 @@ public class LoginActivity extends AppCompatActivity {
 
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
-
+        finish();
     }
-
-    public static void printHashKey(Context pContext) {
-        try {
-            PackageInfo info = pContext.getPackageManager().getPackageInfo(pContext.getPackageName(), PackageManager.GET_SIGNATURES);
-            for (android.content.pm.Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                String hashKey = new String(Base64.encode(md.digest(), 0));
-                Log.i("FB", "printHashKey() Hash Key: " + hashKey);
-            }
-        } catch (NoSuchAlgorithmException e) {
-            Log.e("FB", "printHashKey()", e);
-        } catch (Exception e) {
-            Log.e("FB", "printHashKey()", e);
-        }
-    }
-
-
 
 
 }
