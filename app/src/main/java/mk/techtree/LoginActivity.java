@@ -106,6 +106,8 @@ public class LoginActivity extends AppCompatActivity {
                     Gson gson = new Gson();
                     facebookProfile = gson.fromJson(jsonObject.toString(), UserModel.class);
 
+                    // Uncomment below code to get picture
+
 //                    profileTracker = new ProfileTracker() {
 //                        @Override
 //                        protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
