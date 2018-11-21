@@ -13,9 +13,12 @@ import android.widget.TextView;
 
 import com.wooplr.spotlight.SpotlightView;
 
+import java.util.UUID;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import mk.techtree.BaseApplication;
 import mk.techtree.MainActivity;
 import mk.techtree.R;
 
@@ -64,6 +67,17 @@ public class RaspberryPi extends Fragment {
 
         imageView = view.findViewById(R.id.usb);
 
+
+        if (!BaseApplication.isKitAnimationDisplayed) {
+            BaseApplication.isKitAnimationDisplayed = true;
+            showSpotLight(UUID.randomUUID().toString());
+        }
+
+        return view;
+
+    }
+
+    private void showSpotLight(String uniqueID) {
         new SpotlightView.Builder(getActivity())
                 .introAnimationDuration(400)
                 .enableRevealAnimation(true)
@@ -82,11 +96,8 @@ public class RaspberryPi extends Fragment {
                 .dismissOnTouch(true)
                 .dismissOnBackPress(true)
                 .enableDismissAfterShown(true)
-                .usageId("id") //UNIQUE ID
+                .usageId(uniqueID) //UNIQUE ID
                 .show();
-
-        return view;
-
     }
 
     @OnClick(R.id.back)

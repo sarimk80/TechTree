@@ -13,9 +13,12 @@ import android.widget.TextView;
 
 import com.wooplr.spotlight.SpotlightView;
 
+import java.util.UUID;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import mk.techtree.BaseApplication;
 import mk.techtree.MainActivity;
 import mk.techtree.R;
 
@@ -73,6 +76,15 @@ public class Kit extends Fragment {
         back.setVisibility(View.VISIBLE);
         textView.setText("Kit");
 
+        if (!BaseApplication.isKitAnimationDisplayed) {
+            BaseApplication.isKitAnimationDisplayed = true;
+            showSpotlight(UUID.randomUUID().toString());
+        }
+
+        return view;
+    }
+
+    private void showSpotlight(String uniqueID) {
         new SpotlightView.Builder(getActivity())
                 .introAnimationDuration(400)
                 .enableRevealAnimation(true)
@@ -91,11 +103,8 @@ public class Kit extends Fragment {
                 .dismissOnTouch(true)
                 .dismissOnBackPress(true)
                 .enableDismissAfterShown(true)
-                .usageId("id") //UNIQUE ID
+                .usageId(uniqueID) //UNIQUE ID
                 .show();
-
-
-        return view;
     }
 
     @OnClick(R.id.back)

@@ -14,6 +14,9 @@ import java.io.FileNotFoundException;
 
 public class BaseApplication extends Application {
 
+
+    public static boolean isKitAnimationDisplayed = false;
+
     @Override
     public void onCreate() {
         super.onCreate();
