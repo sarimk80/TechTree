@@ -6,27 +6,11 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
-
-import com.google.android.gms.tasks.OnCanceledListener;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreSettings;
-import com.kaopiz.kprogresshud.KProgressHUD;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import mk.techtree.fragments.OverView;
 import mk.techtree.fragments.Projects;
 import mk.techtree.fragments.RCcar;
-import mk.techtree.helperclasses.ui.helper.UIHelper;
-import mk.techtree.managers.SharedPreferenceManager;
 
 
 public class MainActivity extends AppCompatActivity implements  BottomNavigationView.OnNavigationItemSelectedListener{
