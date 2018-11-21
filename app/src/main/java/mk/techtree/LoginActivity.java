@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
+import android.widget.Button;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -27,6 +28,7 @@ import java.security.NoSuchAlgorithmException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import mk.techtree.constatnts.AppConstants;
 import mk.techtree.managers.SharedPreferenceManager;
 import mk.techtree.models.UserModel;
@@ -36,6 +38,9 @@ public class LoginActivity extends AppCompatActivity {
 
     @BindView(R.id.login_button)
     LoginButton btnFBLoginButton;
+
+    @BindView(R.id.offline)
+    Button Button_Ofline;
 
 
     private UserModel facebookProfile;
@@ -170,6 +175,11 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    @OnClick(R.id.offline)
+    public void click(){
+        Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+        startActivity(intent);
+    }
 
 
 

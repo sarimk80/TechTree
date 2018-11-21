@@ -124,7 +124,8 @@ public class Projects extends Fragment {
                                 jsonObject.getString("things"),
                                 jsonObject.getString("build"),
                                 jsonObject.getString("funtionality"),
-                                jsonObject.getString("youtube")
+                                jsonObject.getString("youtube"),
+                                jsonObject.getString("cardImage")
 
                         );
                         list_view_setters.add(_list_view_setters);
@@ -138,6 +139,7 @@ public class Projects extends Fragment {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Toast.makeText(getContext(), "Oops , Something Went Wrong", Toast.LENGTH_LONG).show();
                 }
 
             }

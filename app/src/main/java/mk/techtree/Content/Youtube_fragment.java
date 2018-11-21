@@ -53,8 +53,11 @@ public class Youtube_fragment extends Fragment {
                 if (!b) {
                     _youTubePlayer=youTubePlayer;
                     _youTubePlayer.setFullscreen(false);
-                    _youTubePlayer.loadVideo(youtube_id);
-                    _youTubePlayer.play();
+                    _youTubePlayer.pause();
+                    //_youTubePlayer.loadVideo(youtube_id);
+                    _youTubePlayer.cueVideo(youtube_id);
+
+                    //_youTubePlayer.play();
                 }
             }
 

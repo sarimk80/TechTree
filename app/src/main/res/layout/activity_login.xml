@@ -36,8 +36,20 @@
             android:layout_gravity="center_horizontal"
             android:visibility="visible" />
 
+        <Button
+            android:id="@+id/offline"
+            android:layout_margin="@dimen/_10sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Use Offline"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/colorAccent"
+            style="?android:attr/borderlessButtonStyle"
+            />
 
     </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
+
+
 
 
 </LinearLayout>

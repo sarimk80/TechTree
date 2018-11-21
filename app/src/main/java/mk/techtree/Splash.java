@@ -24,7 +24,7 @@ public class Splash extends AppCompatActivity {
                 Intent intent = new Intent(Splash.this, LoginActivity.class);
                 startActivity(intent);
             }
-        }, 2000);
+        }, 3000);
 
 
         ImageView imageView = findViewById(R.id.centerImage);
