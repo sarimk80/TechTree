@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
+
 import mk.techtree.models.UserModel;
 
 import static mk.techtree.constatnts.AppConstants.FORCED_RESTART;
@@ -120,6 +121,12 @@ public class SharedPreferenceManager {
 
         editor.remove(key);
         editor.commit();
+    }
+
+    public void clearDB() {
+        // Save Registered Device Data
+        pref.edit().clear().commit();
+
     }
 
 }

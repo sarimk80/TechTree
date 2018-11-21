@@ -22,5 +22,8 @@ public class WebServiceConstants {
     }
 
 
+    public final static String WS_KEY_USER_COLLECTION = "users";
+
+
 
 }

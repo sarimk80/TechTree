@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "1043802892939-hndk026efpghaemr1069il90uk6vookh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "mk.techtree",
+            "certificate_hash": "f08e086f09d755487963346f76212fca1a861aab"
+          }
+        },
+        {
           "client_id": "1043802892939-e700gcglgjsiqtbi17hgvtkne6tghk1h.apps.googleusercontent.com",
           "client_type": 3
         }
