@@ -2,6 +2,8 @@ package mk.techtree.fragments;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -11,6 +13,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.share.Share;
+
+import net.thegreshams.firebase4j.error.FirebaseException;
+import net.thegreshams.firebase4j.error.JacksonUtilityException;
+import net.thegreshams.firebase4j.model.FirebaseResponse;
+import net.thegreshams.firebase4j.service.Firebase;
+
+import java.io.UnsupportedEncodingException;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -19,6 +32,7 @@ import mk.techtree.MainActivity;
 import mk.techtree.R;
 import mk.techtree.abstracts.BaseFragment;
 import mk.techtree.activities.BaseActivity;
+import mk.techtree.managers.SharedPreferenceManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -67,6 +81,11 @@ public class OverView extends Fragment {
 
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+    }
 
     @Override
     public void onDestroyView() {

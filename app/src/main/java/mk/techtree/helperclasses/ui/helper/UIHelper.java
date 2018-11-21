@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -16,6 +17,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.media.ExifInterface;
+import android.os.Build;
 import android.os.Environment;
 import android.support.v4.graphics.ColorUtils;
 import android.text.TextUtils;
@@ -27,10 +29,12 @@ import android.view.ViewParent;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gdacciaro.iOSDialog.iOSDialogBuilder;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -612,6 +616,32 @@ public class UIHelper {
         Log.d(TAG_PIC_INFO, "saveToInternalSorage: mypath.getAbsolutePath()    ->" + mypath.getAbsolutePath());
 
         return mypath;
+    }
+
+    /**
+     * library dependednt
+     */
+    public static KProgressHUD getProgressHUD(Context context) {
+        ProgressBar progressBar = new ProgressBar(context, null, android.R.attr.progressBarStyle);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            progressBar.setIndeterminateTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.c_white)));
+        }
+
+
+        KProgressHUD progressHUD = KProgressHUD.create(context);
+//                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+        progressHUD
+                .setCancellable(false)
+                .setCustomView(progressBar)
+                .setLabel("Loading...", context.getResources().getColor(R.color.c_white));
+//                .setBackgroundColor(getContext().getResources().getColor(R.color.c_white))
+//                .setAnimationSpeed(2)
+//                .setDimAmount(0.8f)
+//                .setGraceTime(500)
+
+        return progressHUD;
+
     }
 
 
