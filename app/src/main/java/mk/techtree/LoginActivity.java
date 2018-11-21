@@ -1,12 +1,9 @@
 package mk.techtree;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
 import android.util.Log;
 
 import com.facebook.AccessToken;
@@ -15,19 +12,26 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONObject;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mk.techtree.constatnts.AppConstants;
+import mk.techtree.constatnts.WebServiceConstants;
+import mk.techtree.helperclasses.DateHelper;
+import mk.techtree.helperclasses.Helper;
+import mk.techtree.helperclasses.ui.helper.UIHelper;
 import mk.techtree.managers.SharedPreferenceManager;
 import mk.techtree.models.UserModel;
 
@@ -40,6 +44,11 @@ public class LoginActivity extends AppCompatActivity {
 
     private UserModel facebookProfile;
     CallbackManager callbackManager;
+    private ProfileTracker profileTracker;
+
+
+    KProgressHUD mDialog;
+    String TAG = "Firebase";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +56,18 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        printHashKey(getApplicationContext());
+//        printHashKey(getApplicationContext());
+
 
         callbackManager = CallbackManager.Factory.create();
+
+
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
+
+        if (isLoggedIn) {
+            disconnectSocialNetworks();
+        }
 
 
         btnFBLoginButton.setReadPermissions("email");
@@ -62,7 +80,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
 //                // App code
-
 
                 AccessToken accessToken = loginResult.getAccessToken();
                 fetchUserInfo(accessToken);
@@ -80,8 +97,39 @@ public class LoginActivity extends AppCompatActivity {
             public void onError(FacebookException exception) {
                 // App code
                 Log.e("fb", "on Error");
+                Helper.isNetworkConnected(getApplicationContext(), true);
             }
         });
+
+    }
+
+    private void sendLoginCall(UserModel userModel) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.setFirestoreSettings(BaseApplication.getFirebaseSetting());
+        mDialog = UIHelper.getProgressHUD(this);
+        mDialog.show();
+
+
+        db.collection(WebServiceConstants.WS_KEY_USER_COLLECTION).document(userModel.userID)
+                .set(userModel)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                        mDialog.dismiss();
+                        changeActivity();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                        mDialog.dismiss();
+                        changeActivity();
+                    }
+                });
+
+
 
     }
 
@@ -100,18 +148,18 @@ public class LoginActivity extends AppCompatActivity {
                     Gson gson = new Gson();
                     facebookProfile = gson.fromJson(jsonObject.toString(), UserModel.class);
 
-//                    profileTracker = new ProfileTracker() {
+//                    ProfileTracker profileTracker = new ProfileTracker() {
 //                        @Override
 //                        protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
-//                            Log.d("**", "onCurrentProfileChanged: "+ facebookProfile.picture);
+//                            Log.d("**", "onCurrentProfileChanged: " + facebookProfile.picture);
 //                            facebookProfile.picture = currentProfile.getProfilePictureUri(200, 200).toString();
 //                        }
 //                    };
 
-//                    facebookProfile.picture = new String("https://graph.facebook.com/" + facebookProfile.fbID + "/picture?width=200&height=150");
-//                    Log.i("profile_pic", facebookProfile.picture + "");
-                    fbLogin(facebookProfile);
+                    facebookProfile.setPicture("https://graph.facebook.com/" + facebookProfile.getUserID() + "/picture?width=200&height=200");
+                    Log.i("profile_pic", facebookProfile.getPicture() + "");
                     disconnectSocialNetworks();
+                    fbLogin(facebookProfile);
 
                 }
             });
@@ -145,32 +193,40 @@ public class LoginActivity extends AppCompatActivity {
 
         disconnectSocialNetworks();
 
+
+        userModel.setLoginDate(DateHelper.getCurrentTime());
+
+
         // User is successfully logged in and saved in your Shared preferences. You can get User from Shared Preferences to use in your app.
 
         SharedPreferenceManager.getInstance(this).putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModel);
 
+        sendLoginCall(userModel);
+
+
+    }
+
+    private void changeActivity() {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
-
-    }
-
-    public static void printHashKey(Context pContext) {
-        try {
-            PackageInfo info = pContext.getPackageManager().getPackageInfo(pContext.getPackageName(), PackageManager.GET_SIGNATURES);
-            for (android.content.pm.Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                String hashKey = new String(Base64.encode(md.digest(), 0));
-                Log.i("FB", "printHashKey() Hash Key: " + hashKey);
-            }
-        } catch (NoSuchAlgorithmException e) {
-            Log.e("FB", "printHashKey()", e);
-        } catch (Exception e) {
-            Log.e("FB", "printHashKey()", e);
-        }
+        finish();
     }
 
 
-
+//    public static void printHashKey(Context pContext) {
+//        try {
+//            PackageInfo info = pContext.getPackageManager().getPackageInfo(pContext.getPackageName(), PackageManager.GET_SIGNATURES);
+//            for (android.content.pm.Signature signature : info.signatures) {
+//                MessageDigest md = MessageDigest.getInstance("SHA");
+//                md.update(signature.toByteArray());
+//                String hashKey = new String(Base64.encode(md.digest(), 0));
+//                Log.i("FB", "printHashKey() Hash Key: " + hashKey);
+//            }
+//        } catch (NoSuchAlgorithmException e) {
+//            Log.e("FB", "printHashKey()", e);
+//        } catch (Exception e) {
+//            Log.e("FB", "printHashKey()", e);
+//        }
+//    }
 
 }
