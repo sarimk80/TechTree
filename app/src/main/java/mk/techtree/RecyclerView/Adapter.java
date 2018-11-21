@@ -8,10 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.LayoutInflater;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +49,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
 
         final List_View_Setters list_view_setters1 = list_view_setters.get(position);
         holder.projects.setText(list_view_setters1.getName_project());
+        //Picasso.get().load(list_view_setters1.getCard_image()).into(holder.imageView);
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,9 +62,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
                 intent.putExtra("Things",list_view_setters1.getThings());
                 intent.putExtra("Build",list_view_setters1.getBuild());
                 intent.putExtra("Functionality",list_view_setters1.getFuntionality());
-
+                intent.putExtra("Youtube_id",list_view_setters1.getYoutube_id());
                 view.getContext().startActivity(intent);
-                Bungee.slideUp(view.getContext());
+
             }
         });
 
@@ -77,12 +80,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
 
         TextView projects;
         RoundKornerRelativeLayout cardView;
+        ImageView imageView;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
             projects = itemView.findViewById(R.id.project);
             cardView = itemView.findViewById(R.id._card);
+            imageView=itemView.findViewById(R.id.card_image);
 
         }
     }

@@ -44,7 +44,7 @@ public class Content_activity extends AppCompatActivity {
 
     String Code;
 
-    String Image, Build, Things, code_function;
+    String Image, Build, Things, code_function,youtube_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +80,8 @@ public class Content_activity extends AppCompatActivity {
 
         code_function = getIntent().getStringExtra("Functionality");
 
+        youtube_id=getIntent().getStringExtra("Youtube_id");
+
 
         textView.setText(Title);
 
@@ -108,6 +110,10 @@ public class Content_activity extends AppCompatActivity {
 
     public String Send_Code_Function() {
         return code_function;
+    }
+
+    public String Send_youtube(){
+        return youtube_id;
     }
 
 

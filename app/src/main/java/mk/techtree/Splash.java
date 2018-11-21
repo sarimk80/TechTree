@@ -35,7 +35,7 @@ public class Splash extends AppCompatActivity {
             public void run() {
                 changeActivity(activity);
             }
-        }, 2000);
+        }, 3000);
 
 
         ImageView imageView = findViewById(R.id.centerImage);

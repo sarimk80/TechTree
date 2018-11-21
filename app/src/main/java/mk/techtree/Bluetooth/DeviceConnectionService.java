@@ -218,7 +218,7 @@ public class DeviceConnectionService {
     try {
         mConnectThread = new ConnectThread(device, uuid);
         mConnectThread.start();
-    }catch (Exception e){
+    }catch (NullPointerException e){
         e.printStackTrace();
         Toast.makeText(mContext,"Bluetooth Device not in Range",Toast.LENGTH_LONG).show();
     }
@@ -322,7 +322,13 @@ public class DeviceConnectionService {
         // Synchronize a copy of the ConnectedThread
         //Log.d(TAG, "write: Write Called.");
         //perform the write
-        mConnectedThread.write(out);
+        try{
+            mConnectedThread.write(out);
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            Toast.makeText(mContext,"ERROR : Bluetooth not in Range",Toast.LENGTH_LONG).show();
+        }
+
     }
 
 }
