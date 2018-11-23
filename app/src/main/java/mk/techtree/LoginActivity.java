@@ -12,14 +12,19 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -28,6 +33,7 @@ import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import mk.techtree.constatnts.AppConstants;
 import mk.techtree.constatnts.WebServiceConstants;
 import mk.techtree.helperclasses.DateHelper;
@@ -41,6 +47,8 @@ public class LoginActivity extends AppCompatActivity {
 
     @BindView(R.id.login_button)
     LoginButton btnFBLoginButton;
+    @BindView(R.id.sign_in_button)
+    SignInButton signInButton;
 
 
     private UserModel facebookProfile;
@@ -51,11 +59,22 @@ public class LoginActivity extends AppCompatActivity {
     KProgressHUD mDialog;
     String TAG = "Firebase";
 
+    // Configure sign-in to request the user's ID, email address, and basic
+// profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+    GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+            .build();
+    private GoogleSignInClient mGoogleSignInClient;
+    private int RC_SIGN_IN = 7070;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
 //        printHashKey(getApplicationContext());
 
@@ -131,7 +150,6 @@ public class LoginActivity extends AppCompatActivity {
                 });
 
 
-
     }
 
 
@@ -160,7 +178,7 @@ public class LoginActivity extends AppCompatActivity {
                     facebookProfile.setPicture("https://graph.facebook.com/" + facebookProfile.getUserID() + "/picture?width=200&height=200");
                     Log.i("profile_pic", facebookProfile.getPicture() + "");
                     disconnectSocialNetworks();
-                    fbLogin(facebookProfile);
+                    userLogin(facebookProfile);
 
                 }
             });
@@ -176,7 +194,17 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+
+
+        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            // The Task returned from this call is always completed, no need to attach
+            // a listener.
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
+        } else {
+            callbackManager.onActivityResult(requestCode, resultCode, data);
+        }
 
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -190,7 +218,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    private void fbLogin(UserModel userModel) {
+    private void userLogin(UserModel userModel) {
 
         disconnectSocialNetworks();
 
@@ -230,4 +258,48 @@ public class LoginActivity extends AppCompatActivity {
 //        }
 //    }
 
+
+    private void signIn() {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+
+            // Signed in successfully, show authenticated UI.
+            createModelFromGoogleAndLogin(account);
+        } catch (ApiException e) {
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
+            UIHelper.showToast(getApplicationContext(), e.getLocalizedMessage());
+
+        }
+    }
+
+
+    @OnClick(R.id.sign_in_button)
+    public void onViewClicked() {
+
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+
+        if (account == null) {
+            signIn();
+        } else {
+            createModelFromGoogleAndLogin(account);
+        }
+
+    }
+
+    private void createModelFromGoogleAndLogin(GoogleSignInAccount account) {
+        UserModel userModel = new UserModel();
+        userModel.setName(account.getDisplayName());
+        userModel.setEmail(account.getEmail());
+        userModel.setUserID(account.getId());
+        if (account.getPhotoUrl() != null)
+            userModel.setPicture(account.getPhotoUrl().toString());
+        userLogin(userModel);
+    }
 }
